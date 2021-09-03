@@ -8,15 +8,15 @@ before_install:
 script:
   - docker run -e CI=true shayim/react-test npm test
 
-after_success
+after_success:
   - docker build -t shayim/multi-client ./client
   - docker build -t shayim/multi-nginx ./nginx
   - docker build -t shayim/multi-server ./server
   - docker build -t shayim/multi-worker ./worker
-  
-  # Log in to docker 
+
+  # Log in to docker
   - echo "$DOCK_SECRET" | docker login -u "$DOCK_ID" --password-stdin
-  - docker push shayim/multi-client 
-  - docker push shayim/multi-nginx  
-  - docker push shayim/multi-server 
+  - docker push shayim/multi-client
+  - docker push shayim/multi-nginx
+  - docker push shayim/multi-server
   - docker push shayim/multi-worker

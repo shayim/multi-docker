@@ -13,6 +13,7 @@ after_success
   - docker build -t shayim/multi-nginx ./nginx
   - docker build -t shayim/multi-server ./server
   - docker build -t shayim/multi-worker ./worker
+  
   # Log in to docker 
   - echo "$DOCK_SECRET" | docker login -u "$DOCK_ID" --password-stdin
   - docker push shayim/multi-client 

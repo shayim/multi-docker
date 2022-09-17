@@ -1,0 +1,23 @@
+sudo: required
+services: docker
+
+before_install:
+  - docker build -t shayim/client-test -f ./client/Dockerfile.dev .
+
+script:
+  - docker run -e CI=true shayim/client-test npm run test
+
+after_success:
+  - docker build -t shayim/multi-client ./client
+  - docker build -t shayim/multi-nginx ./nginx
+  - docker build -t shayim/multi-server ./server
+  - docker build -t shayim/multi-worker ./worker
+
+  # Login docker hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # push images to docker hub
+  - docker push shayim/multi-client
+  - docker push shayim/multi-nginx
+  - docker push shayim/multi-server
+  - docker push shayim/multi-worker

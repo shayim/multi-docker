@@ -54,4 +54,4 @@ app.post('/values/new-value', async (req, res) => {
   res.json({ workerInProgress: true })
 })
 
-app.listen(5000, () => console.log('server is listening at port 5000'))
+app.listen(5000, () => console.log('server is listening at port 5000', pgHost, redisHost， process.env ))

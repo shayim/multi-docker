@@ -21,3 +21,16 @@ after_success:
   - docker push shayim/multi-nginx
   - docker push shayim/multi-server
   - docker push shayim/multi-worker
+
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: ap-southeast-1
+  app: multi-docker
+  env: Multidocker-env
+  bucket_name: elasticbeanstalk-ap-southeast-1-999857680835
+  bucket_path: multi-docker
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY

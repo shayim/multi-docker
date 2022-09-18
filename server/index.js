@@ -5,7 +5,7 @@ const { createClient } = require('redis')
 
 const pgHost = process.env.PG_HOST || 'localhost'
 const pgClient = new Client({
-  connectionString: `postgresql://postgres:postgres@${pgHost}:5432/postgres`
+  connectionString: `postgresql://postgres:postgres@${pgHost}:5432/fibvalues`
 })
 ;(async () => {
   await pgClient.connect()

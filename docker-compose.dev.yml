@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: nginx
+    ports:
+      - 8088:80
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+
+  client:
+    build:
+      context: client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    environment:
+      - WDS_SOCKET_PORT=0
+
+  api:
+    build:
+      context: server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    restart: on-failure
+    depends_on:
+      - pg
+      - redis
+    environment:
+      - PG_HOST=pg
+      - REDIS_HOST=redis
+
+  worker:
+    build:
+      context: worker
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./worker:/app
+    restart: on-failure
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+
+  redis:
+    image: redis
+
+  pg:
+    image: postgres
+
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

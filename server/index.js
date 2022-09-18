@@ -16,6 +16,7 @@ const redisHost = process.env.REDIS_HOST || 'localhost'
 const redisClient = createClient({
   url: `redis://${redisHost}:6379`
 })
+
 const pub = redisClient.duplicate()
 const sub = redisClient.duplicate()
 ;(async () => {

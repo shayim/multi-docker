@@ -12,6 +12,10 @@ services:
 
   api:
     image: shayim/multi-server
+    env_file:
+      - .env
 
   worker:
     image: shayim/multi-worker
+    env_file:
+      - .env

@@ -25,32 +25,40 @@ const Fib = () => {
     setValue('')
   }
 
+  const renderSeenIndexes = () => {
+    return fib.seedIndexes.map(({ n }) => n).join(', ')
+  }
+
+  const renderValues = () => {
+    const entries = []
+
+    for (let key in fib.values) {
+      entries.push(
+        <div key={key}>
+          For index {key} I calculated {fib.values[key]}
+        </div>
+      )
+    }
+
+    return entries
+  }
+
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <label htmlFor="index">Enter Your Index</label>
+        <label>Enter your index:</label>
         <input
-          type="text"
-          id="index"
           value={value}
-          onChange={({ target }) => setValue(target.value)}
+          onChange={(event) => setValue(event.target.value)}
         />
-        <button type="submit">Submit</button>
+        <button>Submit</button>
       </form>
 
-      <h3>Indexes have been seeded:</h3>
-      {fib.seedIndexes.map((index) => (
-        <span style={{ margin: '0 2px' }} key={index.n}>
-          {index.n}
-        </span>
-      ))}
+      <h3>Indexes I have seen:</h3>
+      {renderSeenIndexes()}
 
-      <h3>Calculated Values</h3>
-      {Object.entries(fib.values).map((e) => (
-        <div key={e[0]}>
-          For index {e[0]} | Calculated {e[1]}
-        </div>
-      ))}
+      <h3>Calculated Values:</h3>
+      {renderValues()}
     </div>
   )
 }

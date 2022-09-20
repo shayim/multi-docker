@@ -11,7 +11,7 @@ function App() {
       <div className="App">
         <div className="App-header">
           <img src={logo} alt="" width="120" />
-          <h1>Welcome to React!!!</h1>
+          <h1>Welcome to React! Let's go Kubenetes!</h1>
           <Link to="/">Home</Link>
           <Link to="/dummy">Dummy</Link>
         </div>
